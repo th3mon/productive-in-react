@@ -1,3 +1,11 @@
 *.sublime-project
 *.sublime-workspace
 
+package.json~
+.package.json.un~
+
+..gitignore.un~
+.gitignore~
+
+/node_modules
+
