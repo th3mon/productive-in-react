@@ -1,50 +1,59 @@
+"use strict";
 //helper functions
 var h =  {
-  rando : function(arr) {
+  rando: function(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   },
-  getTime : function() {
-      var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      var d = new Date();
-      var mon = month[d.getMonth()];
-      var day = d.getDate();
-      var year = d.getFullYear();
-      var dateAll = mon + " " + day + ", " + year;
 
-      return dateAll;
+  getTime: function() {
+    var
+      month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      d = new Date(),
+      mon = month[d.getMonth()],
+      day = d.getDate(),
+      year = d.getFullYear(),
+      dateAll = mon + " " + day + ", " + year;
+
+    return dateAll;
   },
-  getTaggedName : function() {
-    var adjectives = ['trusted', 'secure', 'hot', 'new', 'interesting', 'best practice', 'exciting'];
 
-    var nouns = ['es6', 'browserify', 'webpack', 'gulp', 'reactDOM', 'devTools'];
+  getTaggedName: function() {
+    var
+      adjectives = ['trusted', 'secure', 'hot', 'new', 'interesting', 'best practice', 'exciting'],
+      nouns = ['es6', 'browserify', 'webpack', 'gulp', 'reactDOM', 'devTools'];
 
     return this.rando(adjectives) + ' ' + this.rando(nouns);
   }
-}
+},
 
 // App
-var App = React.createClass({
-  getInitialState : function() {
+App = React.createClass({
+  getInitialState: function() {
     return {
-      posts : {}
+      posts: {}
     }
   },
-  addPost : function(post) {
+
+  addPost: function(post) {
     var timestamp = (new Date()).getTime();
     // update the state object
     this.state.posts['post-' + timestamp] = post;
     // set the state
-    this.setState({ posts : this.state.posts });
+    this.setState({ posts: this.state.posts });
   },
-  renderPost : function(key){
+
+  renderPost: function(key){
     return <NewPost key={key} index={key} details={this.state.posts[key]} />
   },
-  render : function() {
-    var imgOne = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Balaton_Hungary_Landscape.jpg/1024px-Balaton_Hungary_Landscape.jpg";
-    var imgTwo ="https://c2.staticflickr.com/8/7432/9087815445_1a14743549_b.jpg";
-    var imgThree ="https://c2.staticflickr.com/6/5738/23929500196_b6a1ce1dfb_b.jpg";
-    var imgFour ="https://pixabay.com/static/uploads/photo/2015/09/14/19/15/aerial-landscape-939963_960_720.jpg";
-    var dummyPost = "Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.";
+
+  render: function() {
+    var
+      imgOne = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Balaton_Hungary_Landscape.jpg/1024px-Balaton_Hungary_Landscape.jpg",
+      imgTwo ="https://c2.staticflickr.com/8/7432/9087815445_1a14743549_b.jpg",
+      imgThree ="https://c2.staticflickr.com/6/5738/23929500196_b6a1ce1dfb_b.jpg",
+      imgFour ="https://pixabay.com/static/uploads/photo/2015/09/14/19/15/aerial-landscape-939963_960_720.jpg",
+      dummyPost = "Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.";
+
     return (
       <div>
         <Banner />
@@ -62,28 +71,28 @@ var App = React.createClass({
       </div>
     )
   }
-
-});
+}),
 
 /*
   Add Post Form
   <AddPostForm />
 */
-var AddPostForm = React.createClass({
-  createPost : function(event) {
+AddPostForm = React.createClass({
+  createPost: function(event) {
     event.preventDefault();
     // take the data from the form and create an object
     var post = {
-      title : this.refs.title.value,
-      name : this.refs.name.value,
-      desc : this.refs.desc.value,
-      image : this.refs.image.value
-    }
+      title: this.refs.title.value,
+      name: this.refs.name.value,
+      desc: this.refs.desc.value,
+      image: this.refs.image.value
+    };
     // add the post to the App State
     this.props.addPost(post);
     this.refs.postForm.reset();
   },
-  render : function() {
+
+  render: function() {
     return (
       <div className="callout secondary form-area">
       <h5>Add a Post to the React Blog</h5>
@@ -102,21 +111,21 @@ var AddPostForm = React.createClass({
           <label>Image URL - <span className="highlight">use this one to test 'http://bit.ly/1P9prpc'</span>
             <input type="url" ref="image" placeholder="The URL of the featured image for your post" required/>
           </label>
-          <button type="submit" class="button">Add Post</button>
+          <button type="submit" className="button">Add Post</button>
         </form>
       </div>
     )
   }
-});
-
+}),
 
 /*
   NewPost
   <NewPost />
 */
-var NewPost = React.createClass({
-  render : function() {
+NewPost = React.createClass({
+  render: function() {
     var details = this.props.details;
+
     return (
       <div className="blog-post">
         <h3 className="ptitle">{details.title}<small>{h.getTime()}</small></h3>
@@ -132,13 +141,12 @@ var NewPost = React.createClass({
       </div>
     )
   }
-});
+}),
 
 
 // Nav component
-var Nav = React.createClass({
-
-  render : function() {
+Nav = React.createClass({
+  render: function() {
     return (
       <div className="top-bar">
         <div className="top-bar-left">
@@ -152,14 +160,11 @@ var Nav = React.createClass({
       </div>
     )
   }
-
-});
-
+}),
 
 // Banner component
-var Banner = React.createClass({
-
-  render : function() {
+Banner = React.createClass({
+  render: function() {
     return (
       <div>
         <Nav />
@@ -173,17 +178,17 @@ var Banner = React.createClass({
       </div>
     )
   }
-
-});
-
+}),
 
 // Blog Post
-var Post = React.createClass({
-  tryClick : function() {
+Post = React.createClass({
+  tryClick: function() {
     alert('just trying out click events lalala');
   },
-  render : function() {
+
+  render: function() {
     var com = "Comments";
+
     return (
       <div className="blog-post">
         <h3 className="ptitle">{this.props.ptitle}<small>{this.props.date}</small></h3>
@@ -202,13 +207,14 @@ var Post = React.createClass({
 });
 
 //instead of ReactDOM like in the video:
-React.render(<App/>, document.querySelector("#main"));
+ReactDOM.render(<App/>, document.querySelector("#main"));
 
 //polyfill for key
 // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 if (!Object.keys) {
   Object.keys = (function() {
     'use strict';
+
     var hasOwnProperty = Object.prototype.hasOwnProperty,
         hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
         dontEnums = [
@@ -249,18 +255,19 @@ if (!Object.keys) {
 
 //header scroll stuff
 window.onscroll = function(e) {
-  var nav = document.getElementsByClassName("top-bar")[0],
-      banner = document.getElementsByClassName("big-banner")[0],
-      range = 70,
-      scrollTop = document.body.scrollTop;
+  var
+    nav = document.getElementsByClassName("top-bar")[0],
+    banner = document.getElementsByClassName("big-banner")[0],
+    range = 70,
+    scrollTop = document.body.scrollTop;
 
   if (scrollTop > range) {
-      nav.classList.add("scrollNav");
-      banner.classList.add("blurred");
-    }
-    else {
-      nav.classList.remove("scrollNav");
-      banner.classList.remove("blurred");
+    nav.classList.add("scrollNav");
+    banner.classList.add("blurred");
+  }
+
+  else {
+    nav.classList.remove("scrollNav");
+    banner.classList.remove("blurred");
   }
 };
-
